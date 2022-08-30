@@ -65,12 +65,37 @@ rgbeLoader.load('./assets/MR_INT-005_WhiteNeons_NAD.hdr', function(texture){
   scene.environment = texture
 
   assetLoader.load('./assets/scene.gltf', function(gltf){
+    console.log('model loaded')
     const model = gltf.scene
     scene.add(model)
     rusty = model
     rusty.name = "rusty"
+  }
+  ,(xhr) => {
+    console.log(`Scene ${(xhr.loaded / xhr.total) * 100}% loaded`);
+  },
+  (error) => {
+    console.error("An error happened", error);
   })
+}, function(progress){
+  console.log(progress.loaded / progress.total * 100, " onHDR Progess")
 })
+
+THREE.DefaultLoadingManager.onStart = function ( url, itemsLoaded, itemsTotal ) {
+	console.log( 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
+};
+
+THREE.DefaultLoadingManager.onLoad = function () {
+	console.log( 'Loading Complete!');
+};
+
+THREE.DefaultLoadingManager.onProgress = function ( url, itemsLoaded, itemsTotal ) {
+	console.log( 'Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
+};
+
+THREE.DefaultLoadingManager.onError = function ( url ) {
+	console.log( 'There was an error loading ' + url );
+};
 
 const options = {
   sphereColor : '#ffea00',
