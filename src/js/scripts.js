@@ -70,15 +70,13 @@ rgbeLoader.load('./assets/MR_INT-005_WhiteNeons_NAD.hdr', function(texture){
     scene.add(model)
     rusty = model
     rusty.name = "rusty"
-  }
-  ,(xhr) => {
+  },(xhr) => {
     console.log(`Scene ${(xhr.loaded / xhr.total) * 100}% loaded`);
-  },
-  (error) => {
+  },(error) => {
     console.error("An error happened", error);
   })
-}, function(progress){
-  console.log(progress.loaded / progress.total * 100, " onHDR Progess")
+}, (progress)=>{
+  console.log(Math.round(progress.loaded / progress.total * 100), " onHDR Progess")
 })
 
 THREE.DefaultLoadingManager.onStart = function ( url, itemsLoaded, itemsTotal ) {
